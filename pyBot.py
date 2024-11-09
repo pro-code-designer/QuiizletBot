@@ -432,7 +432,7 @@ async def button_callback(update, context,data):
         await add_course_part(update, context)
     elif data == "پایان دوره":
         await end_course_part(update, context)
-    elif data == "دریافت کلید🔑:\nبزن بریم❤️‍🔥":
+    elif data == "دریافت کلید🔑\nبزن بریم❤️‍🔥":
         await send_course_parts(update, context)
     elif data == "ارسال تکالیف و نظرات":
         await send_review_lotcode(update,context,"Review")
