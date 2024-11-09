@@ -53,7 +53,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         contact_button = KeyboardButton("اشتراک اطلاعات تماس ", request_contact=True)
         reply_markup = ReplyKeyboardMarkup([[contact_button]], resize_keyboard=True, one_time_keyboard=True)
-        await update.message.reply_text("رای ورود و شروع آموزش‌ها نیاز به یه حساب کاربری داری که سریع برات می‌سازیمش😎\n\nرفیق حساب کاربریت با شماره خودت ساخته میشه پس روی کلید زیر بزنید❤️👇", reply_markup=reply_markup)
+        await update.message.reply_text("برای ورود و شروع آموزش‌ها نیاز به یه حساب کاربری داری که سریع برات می‌سازیمش😎\n\nرفیق حساب کاربریت با شماره خودت ساخته میشه پس روی کلید زیر بزنید❤️👇", reply_markup=reply_markup)
 
 # Contact handler
 async def contact_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -351,7 +351,7 @@ async def send_course_parts(update: Update, context: ContextTypes.DEFAULT_TYPE):
             {"$inc": {"course_part_number": 1}}  # Increment the course_part_number by 1
         )
         users_collection.update_one({"_id": update.message.from_user.id}, {"$set": {"LastDownload": now, "RemindCheck" : False}})
-        await update.message.reply_text("فایل های بالا بعد از 24 ساعت به صورت اتوماتیک پاک میشوند.",reply_markup=show_buttons(update, context,"Course"))
+        await update.message.reply_text("منتظر تمرینت هستیما!❤️",reply_markup=show_buttons(update, context,"Course"))
         logging.info(f"Sent course part {course_part['part_number']} to user {user_id}")
     except Exception as e:
         logging.error(f"Failed to send course part to {user_id}: {e}")
@@ -402,7 +402,7 @@ def show_buttons(update, context, mode):
     else:
         if(mode == "Normal"):
             keyboard = [
-                [KeyboardButton("دریافت کلید🔑:\nبزن بریم❤️‍🔥")]
+                [KeyboardButton("دریافت کلید🔑\nبزن بریم❤️‍🔥")]
             ]
         elif(mode == "Course"):
             keyboard = [
