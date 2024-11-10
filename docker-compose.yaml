@@ -1,8 +1,10 @@
-# Remove this line: version: '3.8'
 services:
   mongo:
     image: mongo:latest
     container_name: mongo_container
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME="XH0<Vhg(951." 
+      - MONGO_INITDB_ROOT_PASSWORD="55Xg(0=4U3SM" 
     ports:
       - "27017:27017"
     volumes:
@@ -14,7 +16,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://mongo:27017/
+      - MONGO_URI="mongodb://XH0<Vhg(951.:55Xg(0=4U3SM@mongo:27017/"  
     ports:
       - "5000:5000"
     restart: always
