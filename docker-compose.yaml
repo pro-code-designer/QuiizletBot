@@ -3,8 +3,8 @@ services:
     image: mongo:latest
     container_name: mongo_container
     environment:
-      - MONGO_INITDB_ROOT_USERNAME="XH0%3CVhg%28951."  # URL-encoded username
-      - MONGO_INITDB_ROOT_PASSWORD="55Xg%280=4U3SM"  # URL-encoded password
+      - MONGO_INITDB_ROOT_USERNAME=cnoi1986Assdn  # URL-encoded username
+      - MONGO_INITDB_ROOT_PASSWORD=55Xg804U3SM  # URL-encoded password
     ports:
       - "27017:27017"
     volumes:
@@ -16,7 +16,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI="mongodb://XH0%3CVhg%28951.:55Xg%280=4U3SM@mongo:27017/"  # URL-encoded Mongo URI
+      - MONGO_URI="mongodb://cnoi1986Assdn:55Xg804U3SM@mongo:27017/"  # URL-encoded Mongo URI
     ports:
       - "5000:5000"
     restart: always
