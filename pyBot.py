@@ -22,9 +22,9 @@ courses_collection = db["courses"]  # New collection for storing course parts
 lottery_collection = db["lottery_database"] 
 
 # Replace with your admin user ID
-ADMIN_USER_ID =  281349921
+ADMIN_USER_ID =  5766796317
 SAVR_GP_ID = -1002250211802
-Bot_Token = "7393447211:AAFPRoa203ot_z9uqaVdvBu6L1K-mFxslSw"
+Bot_Token = "7549275813:AAETAkZlM8PU7h6RZ6hnpxJTycq6iFjX4yE"
 Check_Time_Second = 3600
 Delete_Time_Second = 24*3600
 injection_pattern = re.compile(r"[\$\\{}\[\]\(\)]|\"|\b(eval|function)\b", re.IGNORECASE)
