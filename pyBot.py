@@ -11,7 +11,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # MongoDB setup
-mongo_uri = os.getenv('MONGO_URI', 'mongodb://XH0<Vhg(951.:55Xg(0=4U3SM@mongo:27017/')  # Replace with your MongoDB URI
+mongo_uri = os.getenv('MONGO_URI', 'mongodb://XH0%3CVhg%28951.%3A55Xg%280%3D4U3SM@mongo:27017/')
 client = MongoClient(MONGO_URI)
 db = client["telegram_bot_db"]  # Database name
 users_collection = db["users"]
