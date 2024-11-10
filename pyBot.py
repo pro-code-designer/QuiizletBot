@@ -1,4 +1,5 @@
 import os
+import re
 import logging
 import datetime
 import asyncio
@@ -11,7 +12,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # MongoDB setup
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://cnoi1986Assdn:55Xg804U3SMsa@localhost:2617/")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://GdfhOIHJhihhger:nasdklfjbnksdjf@mongo:27017/")
   # Replace with your MongoDB URI
 client = MongoClient(MONGO_URI)
 db = client["telegram_bot_db"]  # Database name
@@ -21,11 +22,13 @@ courses_collection = db["courses"]  # New collection for storing course parts
 lottery_collection = db["lottery_database"] 
 
 # Replace with your admin user ID
-ADMIN_USER_ID = 281349921
+ADMIN_USER_ID =  281349921
 SAVR_GP_ID = -1002250211802
 Bot_Token = "7393447211:AAFPRoa203ot_z9uqaVdvBu6L1K-mFxslSw"
 Check_Time_Second = 3600
 Delete_Time_Second = 24*3600
+injection_pattern = re.compile(r"[\$\\{}\[\]\(\)]|\"|\b(eval|function)\b", re.IGNORECASE)
+MAX_NAME_LENGTH = 30
 
 # Initialize broadcast mode and course part flag
 broadcast_mode = False
@@ -82,16 +85,22 @@ async def name_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.chat.type != 'private':
         return
     name = update.message.text
-    if len(name) > 60:
-        update.message.reply_text("نام شما خیلی طولانی است. لطفاً آن را زیر 60 کاراکتر نگه دارید.")
-        return
+    # Check for MongoDB injection patterns
+    
     user_id = update.message.from_user.id
     user = users_collection.find_one({"_id": user_id})
 
     if user and user.get("awaiting_name"):
-        users_collection.update_one({"_id": user_id}, {"$set": {"name": name, "awaiting_name": False}})
-        await update.message.reply_text(f"{name} عزیز شما با موفقیت عضو خانواده بزرگ کوییزلت شدین🥳🥰💛\nقبل از اینکه این چالشو شروع کنیم حتماً به ویس میثاق و تینا گوش بدین تا کامل دستورالعمل این دوره رو متوجه بشین👇",reply_markup=show_buttons(update, context,"Normal"))
-        await update.message.reply_text("برای شروع چالش ۳کلید 🔑 بروی کلید زیر بزنید و متعهدانه آموزش هارو شروع کنید❤️",reply_markup=show_buttons(update, context,"Normal"))
+        if injection_pattern.search(name):
+            await update.message.reply_text("نام شما شامل کاراکترهای غیرمجاز است. لطفاً یک نام معتبر وارد کنید.")
+            return
+        if len(name) > MAX_NAME_LENGTH:
+            await update.message.reply_text(f"نام شما خیلی طولانی است. لطفاً آن را زیر {MAX_NAME_LENGTH} کاراکتر نگه دارید.")
+            return
+        else:
+            users_collection.update_one({"_id": user_id}, {"$set": {"name": name, "awaiting_name": False}})
+            await update.message.reply_text(f"{name} عزیز شما با موفقیت عضو خانواده بزرگ کوییزلت شدین🥳🥰💛\nقبل از اینکه این چالشو شروع کنیم حتماً به ویس میثاق و تینا گوش بدین تا کامل دستورالعمل این دوره رو متوجه بشین👇",reply_markup=show_buttons(update, context,"Normal"))
+            await update.message.reply_text("برای شروع چالش ۳کلید 🔑 بروی کلید زیر بزنید و متعهدانه آموزش هارو شروع کنید❤️",reply_markup=show_buttons(update, context,"Normal"))
     elif await button_callback(update, context,name):
         pass
     else:
@@ -436,7 +445,7 @@ async def button_callback(update, context,data):
         await add_course_part(update, context)
     elif data == "پایان دوره":
         await end_course_part(update, context)
-    elif data == "دریافت کلید🔑:\nبزن بریم❤️‍🔥":
+    elif data == "دریافت کلید🔑\nبزن بریم❤️‍🔥":
         await send_course_parts(update, context)
     elif data == "ارسال تکالیف و نظرات":
         await send_review_lotcode(update,context,"Review")
