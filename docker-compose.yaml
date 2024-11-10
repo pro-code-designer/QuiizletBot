@@ -1,10 +1,12 @@
-# Remove this line: version: '3.8'
 services:
   mongo:
     image: mongo:latest
     container_name: mongo_container
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=cnoi1986Assdn  # Replace with your desired username
+      - MONGO_INITDB_ROOT_PASSWORD=55Xg804U3SMsa  # Replace with your desired password
     ports:
-      - "27017:27017"
+      - "2617:27017"
     volumes:
       - mongo_data:/data/db
 
@@ -14,7 +16,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://mongo:27017/
+      - MONGO_URI=mongodb://cnoi1986Assdn:55Xg804U3SMsa@mongo:27017/  # Update with your credentials
     ports:
       - "5000:5000"
     restart: always
