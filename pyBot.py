@@ -11,7 +11,8 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # MongoDB setup
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")  # Replace with your MongoDB URI
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://cnoi1986Assdn:55Xg804U3SMsa@localhost:2617/")
+  # Replace with your MongoDB URI
 client = MongoClient(MONGO_URI)
 db = client["telegram_bot_db"]  # Database name
 users_collection = db["users"]
@@ -20,9 +21,9 @@ courses_collection = db["courses"]  # New collection for storing course parts
 lottery_collection = db["lottery_database"] 
 
 # Replace with your admin user ID
-ADMIN_USER_ID = 5766796317
+ADMIN_USER_ID = 281349921
 SAVR_GP_ID = -1002250211802
-Bot_Token = "7549275813:AAETAkZlM8PU7h6RZ6hnpxJTycq6iFjX4yE"
+Bot_Token = "7393447211:AAFPRoa203ot_z9uqaVdvBu6L1K-mFxslSw"
 Check_Time_Second = 3600
 Delete_Time_Second = 24*3600
 
@@ -81,6 +82,9 @@ async def name_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.chat.type != 'private':
         return
     name = update.message.text
+    if len(name) > 60:
+        update.message.reply_text("نام شما خیلی طولانی است. لطفاً آن را زیر 60 کاراکتر نگه دارید.")
+        return
     user_id = update.message.from_user.id
     user = users_collection.find_one({"_id": user_id})
 
@@ -432,7 +436,7 @@ async def button_callback(update, context,data):
         await add_course_part(update, context)
     elif data == "پایان دوره":
         await end_course_part(update, context)
-    elif data == "دریافت کلید🔑\nبزن بریم❤️‍🔥":
+    elif data == "دریافت کلید🔑:\nبزن بریم❤️‍🔥":
         await send_course_parts(update, context)
     elif data == "ارسال تکالیف و نظرات":
         await send_review_lotcode(update,context,"Review")
