@@ -1,0 +1,25 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo_container
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=GdfhOIHJhihhger  # Replace with your desired username
+      - MONGO_INITDB_ROOT_PASSWORD=nadlfj72bnksajd94  # Replace with your desired password
+    ports:
+      - "26157:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  bot:
+    build: .
+    container_name: bot_container
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://GdfhOIHJhihhger:nadlfj72bnksajd94@mongo:27017/  # Update with your credentials
+    ports:
+      - "5000:5000"
+    restart: always
+
+volumes:
+  mongo_data:
