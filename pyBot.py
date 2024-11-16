@@ -16,10 +16,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     user_id = update.message.from_user.id
     user = BS.users_collection.find_one({"_id": user_id})
-    if user["Mode"] =="End":
-        return
     # Send the appropriate text message
     if user and user.get("contact"):
+        if user["Mode"] =="End":
+            return
         await update.message.reply_text(
             "خوش آمدید! شما قبلاً اطلاعات تماس خود را به اشتراک گذاشته‌اید.",
             reply_markup=BH.show_buttons(update, context, "Normal")
