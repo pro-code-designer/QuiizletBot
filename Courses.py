@@ -140,7 +140,8 @@ async def send_course_parts(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     from_chat_id=user_id, 
                     message_id=message_id
                 )
-                BS.messages_collection.insert_one({"user_id": update.message.chat_id, "message_id": sent_message.message_id, "message_type": "course", "timestamp": now})
+                if(course_part_number <3):
+                    BS.messages_collection.insert_one({"user_id": update.message.chat_id, "message_id": sent_message.message_id, "message_type": "course", "timestamp": now})
             else:
                 sent_message = await context.bot.copy_message(
                     chat_id=update,
