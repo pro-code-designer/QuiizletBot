@@ -28,6 +28,8 @@ async def send_review_lotcode(update: Update, context: ContextTypes.DEFAULT_TYPE
         await update.message.reply_text("زمان ارسال شما به پایان رسیده است.",reply_markup=BH.show_buttons(update, context,"Normal"))
         return
     if user_id != BS.ADMIN_USER_ID:
+        if not user :
+            return
         if user["Mode"] =="End":
             if mode == "Code":
                 return
